@@ -1,0 +1,22 @@
+version: '3'
+services:
+  master:
+    env_file:
+     - ./.env
+    container_name: pgsql132-master
+    restart: always
+    build: .
+    volumes:
+        - ./data:/var/lib/postgresql/data
+        - ./actual-postgres.conf:/etc/postgresql/postgresql.conf
+    ports:
+      - "${PORT}:5432"
+    environment:
+      - 'HOST_MASTER=${HOST_MASTER}'
+      - 'HOST_SLAVE=${HOST_SLAVE}'
+      - 'SLAVE_SLOT=${SLAVE_SLOT}'
+      - 'POSTGRES_USER=${POSTGRES_USER}'
+      - 'POSTGRES_PASSWORD=${POSTGRES_PASSWORD}'
+      - 'POSTGRES_DB=${POSTGRES_DB}'
+      - 'PG_REP_USER=${PG_REP_USER}'
+      - 'PG_REP_PASSWORD=${PG_REP_PASSWORD}'
